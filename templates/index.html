@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Books!{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+      <h1>Add a new review into the database</h1>
+      <form method="POST" action="{{ url_for('book_search', result='') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.search.label(class="form-label") }}
+          {{ form.search(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-primary") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    {% for books in all_books %}
+    <div class="col-12 col-sm-6 col-md-4 mb-4">  <!-- Responsive columns -->
+      <div class="card shadow-sm">
+        <!-- Set a fixed height for the image container and hide overflow -->
+        <div class="d-flex justify-content-center" style="height: 350px; overflow: hidden;">
+          <img
+            src="{{ books.img_url }}"
+            alt="Book Image"
+            class="img-fluid"
+            style="height: 100%; width: auto; object-fit: cover;">
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{{ books.title }}</h3>
+          <p class="card-title">ISBN: {{ books.isbn }}</p>
+          <p class="card-text">{{ books.description }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-primary">View</button>
+
+
+
+
+              <a href="{{url_for('remove_book', id=books.isbn)}}"><button type="button" class="btn btn-sm btn-danger">Delete</button></a>
+            </div>
+            <small class="text-body-secondary">{{ books.year }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+{% endblock %}

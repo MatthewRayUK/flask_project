@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-5 px-4">
+    <h1>Search Results</h1>
+    <ul>
+        {% for x in data["docs"] %}
+        <li>
+            <a href="{{ url_for('add_book', id=x.isbn) }}">
+                {{ x["title"] }},
+                {{ x["author_name"][0] }},
+                {{ x["first_publish_year"] }}
+                {% if x.isbn and x.isbn|length > 0 %}
+                    <img
+                        src="https://covers.openlibrary.org/b/isbn/{{ x.isbn[0] }}-M.jpg"
+                        alt="Book Image"
+                        class="img-fluid"
+                        style="height: 100%; width: auto; object-fit: cover;">
+                {% else %}
+                    <p>No image available for {{ x.title }}</p>
+                {% endif %}
+            </a>
+        </li>
+        <p></p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
