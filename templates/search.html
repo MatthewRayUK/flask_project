@@ -4,28 +4,40 @@
     <h1>Search Results</h1>
     <div class="row">
         {% for x in data["docs"] %}
-        <div class="col-md-4 mb-4">  <!-- Use col-md-4 for 3 cards per row on medium+ screens -->
-            <div class="card rounded-3 shadow-sm">
-                <div class="card-header py-3">
-                    <h2 class="my-0 fw-normal">{{ x["title"] }}</h2>
-                </div>
-                <div class="card-body">
-                    <a href="{{ url_for('add_book', id=x.isbn) }}">
-                        <h4 class="card-title pricing-card-title">{{ x["author_name"][0] }}</h4>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>{{ x["first_publish_year"] }}</li>
-                            {% if x.isbn and x.isbn|length > 0 %}
-                                <img
-                                    src="https://covers.openlibrary.org/b/isbn/{{ x.isbn[0] }}-M.jpg"
-                                    alt="Book Image"
-                                    class="img-fluid"
-                                    style="height: 100%; width: auto; object-fit: cover;">
-                            {% else %}
-                                <p>No image available for {{ x.title }}</p>
-                            {% endif %}
-                        </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Select</button>
-                    </a>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card border-gray-300 h-100">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                        {% if x.isbn and x.isbn|length > 0 %}
+                        <img
+                                src="https://covers.openlibrary.org/b/isbn/{{ x.isbn[0] }}-M.jpg"
+                                alt="Book Image"
+                                class="img-fluid"
+                                style="height: 100%; width: auto; object-fit: cover;">
+                        {% else %}
+                        <p>No image available for {{ x.title }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body px-3">
+                            <h3 class="card-title">{{ x["title"] }}</h3>
+                            <p class="card-text mb-4">This is where user description and rating will go eventually.</p>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                <!-- Added flex-wrap -->
+                                <span class="card-text small text-truncate">  <!-- Added text-truncate for better overflow handling -->
+                                    <span class="far fa-calendar-alt me-2"></span>ISBN: {{ x["isbn"][0] }}
+                                </span>
+                                <span class="small text-truncate">  <!-- Added text-truncate for better overflow handling -->
+                                    <span class="far fa-comments me-2"></span>First Published: {{ x["first_publish_year"] }}
+                                </span>
+                            </div>
+                            <a href="{{ url_for('add_book', id=x.isbn) }}">
+
+                                <button type="button" class="mt-2 w-100 btn btn-lg btn-outline-primary">Choose Book
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
