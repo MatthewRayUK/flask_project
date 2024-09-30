@@ -2,26 +2,34 @@
 {% block content %}
 <div class="py-5 px-4">
     <h1>Search Results</h1>
-    <ul>
+    <div class="row">
         {% for x in data["docs"] %}
-        <li>
-            <a href="{{ url_for('add_book', id=x.isbn) }}">
-                {{ x["title"] }},
-                {{ x["author_name"][0] }},
-                {{ x["first_publish_year"] }}
-                {% if x.isbn and x.isbn|length > 0 %}
-                    <img
-                        src="https://covers.openlibrary.org/b/isbn/{{ x.isbn[0] }}-M.jpg"
-                        alt="Book Image"
-                        class="img-fluid"
-                        style="height: 100%; width: auto; object-fit: cover;">
-                {% else %}
-                    <p>No image available for {{ x.title }}</p>
-                {% endif %}
-            </a>
-        </li>
-        <p></p>
+        <div class="col-md-4 mb-4">  <!-- Use col-md-4 for 3 cards per row on medium+ screens -->
+            <div class="card rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h2 class="my-0 fw-normal">{{ x["title"] }}</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('add_book', id=x.isbn) }}">
+                        <h4 class="card-title pricing-card-title">{{ x["author_name"][0] }}</h4>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{ x["first_publish_year"] }}</li>
+                            {% if x.isbn and x.isbn|length > 0 %}
+                                <img
+                                    src="https://covers.openlibrary.org/b/isbn/{{ x.isbn[0] }}-M.jpg"
+                                    alt="Book Image"
+                                    class="img-fluid"
+                                    style="height: 100%; width: auto; object-fit: cover;">
+                            {% else %}
+                                <p>No image available for {{ x.title }}</p>
+                            {% endif %}
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Select</button>
+                    </a>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}
